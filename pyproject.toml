@@ -22,11 +22,18 @@ dependencies = [
     "control>=0.9.4",
 ]
 
-[project.optional-dependencies]
-dev = ["pytest>=7.0"]
+# Optional runtime feature: rigid-body dynamics via Pinocchio.
 # Pinocchio ships via conda on Windows (no PyPI wheel); the `pin` wheel works
-# elsewhere. Mirrors requirements.txt. Install with: pip install -e '.[dynamics]'
+# elsewhere. Mirrors requirements.txt. Install with:
+#   pip install -e '.[dynamics]'      # pip
+#   uv sync --extra dynamics          # uv (Linux/macOS; Windows -> conda)
+[project.optional-dependencies]
 dynamics = ["pin>=2.7 ; platform_system != 'Windows'"]
+
+# Dev tooling (PEP 735). uv installs this group by default with `uv sync`.
+# pip users: `pip install --group dev` (pip>=25.1) or just `pip install pytest`.
+[dependency-groups]
+dev = ["pytest>=7.0"]
 
 [tool.setuptools.packages.find]
 # Discover `lib` and all its subpackages (controllers, dynamics, integrators,

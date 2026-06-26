@@ -24,13 +24,16 @@ and research workflow, see [`CLAUDE.md`](./CLAUDE.md) — this file is the short
 
 ## Build / test commands
 ```bash
-# Environment (pinocchio via conda recommended):
+# Environment — uv (recommended):
+uv sync                                  # core + dev tools (no Pinocchio)
+uv sync --extra dynamics                 # + Pinocchio (Linux/macOS; Windows -> conda)
+# or pinocchio via conda (required on Windows):
 conda env create -f environment.yml && conda activate robot-control
-# or, without pinocchio (numpy parts only):
+# or plain pip, numpy parts only:
 pip install -r requirements.txt
 
-pytest -q            # run unit tests
-python main.py       # run the end-to-end demo
+uv run pytest -q     # run unit tests   (conda/pip: `pytest -q`)
+uv run python main.py # end-to-end demo (conda/pip: `python main.py`)
 ```
 
 ## Definition of done

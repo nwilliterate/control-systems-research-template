@@ -21,4 +21,4 @@ Steps / minimal code or experiment script:
 - OS:
 - Python version:
 - Pinocchio installed? (yes/no, version)
-- Install method (conda env / pip requirements):
+- Install method (uv / conda env / pip requirements):

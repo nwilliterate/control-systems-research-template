@@ -11,15 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v5
         with:
+          enable-cache: true
           python-version: "3.11"
 
-      # Install the pure-numpy scientific stack (NOT Pinocchio): the
-      # Pinocchio-dependent tests (tests/test_sim.py) skip automatically when it
-      # is absent, so this job verifies the OS-independent core on every push.
+      # `uv sync` (no `--extra dynamics`) installs the pure-numpy scientific stack
+      # plus the dev group — but NOT Pinocchio. The Pinocchio-dependent tests
+      # (tests/test_sim.py) skip automatically when it is absent, so this job
+      # verifies the OS-independent core on every push.
       - name: Install dependencies
-        run: pip install numpy scipy matplotlib pyyaml control pytest
+        run: uv sync
 
       - name: Run tests
-        run: pytest -q
+        run: uv run pytest -q

@@ -7,10 +7,10 @@ pyyaml>=6.0
 # Control engineering
 control>=0.9.4          # python-control: LQR, transfer functions, state-space
 
-# Rigid-body dynamics
-# NOTE: pinocchio is best installed via conda-forge (see environment.yml).
-# The PyPI wheel `pin` works on Linux/macOS; on Windows use conda.
-pin>=2.7 ; platform_system != "Windows"
+# Rigid-body dynamics (Pinocchio) is intentionally NOT installed here, so this
+# plain-pip path stays pure-numpy (matching the README). Get Pinocchio via conda
+# (see environment.yml) or the `dynamics` extra:
+#   pip install -e '.[dynamics]'   |   uv sync --extra dynamics   (Linux/macOS; Windows -> conda)
 
 # Dev / testing
 pytest>=7.0

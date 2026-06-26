@@ -13,15 +13,19 @@ research; contributions that keep it small, readable, and reusable are welcome.
 
 ## Dev setup
 ```bash
-conda env create -f environment.yml   # full env (incl. Pinocchio)
+uv sync                               # recommended: core + dev tools (pytest) into .venv
+uv sync --extra dynamics              #   add Pinocchio on Linux/macOS
+# or full Pinocchio env everywhere (required on Windows):
+conda env create -f environment.yml
 conda activate robot-control
-# or, pure-numpy parts only:
+# or pure-numpy parts only:
 pip install -r requirements.txt
 ```
 
 ## Before opening a PR
 ```bash
-pytest -q          # must pass (Pinocchio tests skip if it isn't installed)
+uv run pytest -q   # must pass (Pinocchio tests skip if it isn't installed)
+                   # with conda/pip: just `pytest -q`
 ```
 - Keep diffs focused; one logical change per PR.
 - Update the relevant docs (`README.md`, `docs/`) if behavior or structure changes.

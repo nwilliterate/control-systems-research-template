@@ -54,14 +54,21 @@ CLAUDE.md / AGENTS.md AI-collaboration rules
 
 ## Install
 
-Pinocchio installs most reliably through conda:
+**Recommended — [uv](https://docs.astral.sh/uv/)** (fast, reproducible via `uv.lock`):
+
+```bash
+uv sync                      # core stack + dev tools (pytest) into .venv
+uv sync --extra dynamics     # also Pinocchio — Linux/macOS only (Windows: use conda below)
+```
+
+For the full Pinocchio stack everywhere (and required on Windows), conda is most reliable:
 
 ```bash
 conda env create -f environment.yml
 conda activate robot-control
 ```
 
-Or, for the pure-numpy parts only (integrators, PID, LQR, plotting) without Pinocchio:
+Or, with plain pip, the pure-numpy parts only (integrators, PID, LQR, plotting) without Pinocchio:
 
 ```bash
 pip install -r requirements.txt
@@ -70,10 +77,12 @@ pip install -r requirements.txt
 ## Quick start
 
 ```bash
-pytest -q             # run the unit tests — works on the pip-only install (no Pinocchio)
-python main.py        # full demo: load model -> control -> simulate -> plot
-                      #   NOTE: needs Pinocchio (use the conda env above)
+uv run pytest -q      # run the unit tests — works on the uv/pip install (no Pinocchio)
+uv run python main.py # full demo: load model -> control -> simulate -> plot
+                      #   NOTE: needs Pinocchio (use `uv sync --extra dynamics` or the conda env)
 ```
+
+(With conda or a plain pip venv, drop the `uv run` prefix: `pytest -q`, `python main.py`.)
 
 The controller, integrator, and output flags are all chosen in `config/params.yaml`
 (`controller.type`, `simulation.integrator`, `output.*`) — edit there, not in code.
