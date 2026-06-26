@@ -1,8 +1,16 @@
 # Robot-Control Research Template
 
+[![Use this template](https://img.shields.io/badge/Use%20this%20template-2ea44f?logo=github&logoColor=white)](https://github.com/nwilliterate/robot-control-research-template/generate)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white)
+![Stack](https://img.shields.io/badge/stack-Pinocchio%20%2B%20python--control%20%2B%20Runge--Kutta-orange)
+
 A reusable Python template for **academic robot-control research**, designed for
 **AI-assisted collaboration** (Claude Code / any agent) and a **MATLAB / Spyder-like**
 development style.
+
+> **Starting a new study?** Click **[Use this template](https://github.com/nwilliterate/robot-control-research-template/generate)**
+> (or `gh repo create my-study --private --template nwilliterate/robot-control-research-template --clone`)
+> to spin off a fresh private repo, then fill in `config/`, `experiments/`, and `docs/`.
 
 > One project = one paper = one repo. Reusable math lives in `lib/`; studies live as
 > readable scripts in `experiments/`.
