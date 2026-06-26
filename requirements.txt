@@ -1,0 +1,16 @@
+# Core scientific stack (MATLAB-like numerical computing)
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+pyyaml>=6.0
+
+# Control engineering
+control>=0.9.4          # python-control: LQR, transfer functions, state-space
+
+# Rigid-body dynamics
+# NOTE: pinocchio is best installed via conda-forge (see environment.yml).
+# The PyPI wheel `pin` works on Linux/macOS; on Windows use conda.
+pin>=2.7 ; platform_system != "Windows"
+
+# Dev / testing
+pytest>=7.0

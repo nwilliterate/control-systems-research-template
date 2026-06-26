@@ -1,0 +1,122 @@
+%% ============================================================
+%% Robot-control research paper — IEEEtran template
+%% (ICRA / IROS / RA-L / T-RO style). Build with:
+%%     ./build.sh        (bash)     or
+%%     ./build.ps1       (Windows PowerShell)   or
+%%     make paper        (from project root)
+%%
+%% Class options:
+%%   [conference]      -> ICRA/IROS conference format (default below)
+%%   [journal]         -> T-RO / TASE journal format
+%%   For RA-L use [letterpaper, journal] and the RA-L instructions.
+%% ============================================================
+\documentclass[conference]{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+% Look for figures in this folder, then in the generated results.
+\graphicspath{{figures/}{../../results/figures/}{../../results/figures/run_01/}}
+
+% --- Title & authors --------------------------------------------------
+\title{<Paper Title>:\\ A Robot-Control Study}
+
+\author{
+  \IEEEauthorblockN{First Author\IEEEauthorrefmark{1}}
+  \IEEEauthorblockA{\IEEEauthorrefmark{1}Department of XXX, University YYY\\
+  Email: author@example.com}
+}
+
+\begin{document}
+\maketitle
+
+% --- Abstract & keywords ----------------------------------------------
+\begin{abstract}
+% One paragraph: problem, approach, key result, significance.
+This paper presents \dots. We propose \dots. Simulation results on a
+double-pendulum benchmark show \dots.
+\end{abstract}
+
+\begin{IEEEkeywords}
+robot control, dynamics, computed torque, LQR, simulation
+\end{IEEEkeywords}
+
+% --- 1. Introduction --------------------------------------------------
+\section{Introduction}
+\label{sec:intro}
+Background and motivation. State the research question and contributions:
+\begin{itemize}
+  \item Contribution 1.
+  \item Contribution 2.
+\end{itemize}
+
+% --- 2. Related Work --------------------------------------------------
+\section{Related Work}
+\label{sec:related}
+Prior work and how this study differs. Cite e.g.~\cite{featherstone2008rigid}.
+
+% --- 3. Methodology ---------------------------------------------------
+\section{Methodology}
+\label{sec:method}
+We model the robot by the rigid-body equation of motion
+\begin{equation}
+  M(q)\,\ddot{q} + C(q,\dot{q})\,\dot{q} + g(q) = \tau,
+  \label{eq:eom}
+\end{equation}
+with state $x = [q^\top, \dot{q}^\top]^\top$ and joint torque input $\tau$.
+The forward dynamics are computed with the Articulated Body Algorithm
+(Pinocchio \texttt{aba}) and integrated with a fixed-step Runge--Kutta (RK4)
+scheme. Controller design (e.g.\ computed torque) follows from~\eqref{eq:eom}.
+
+% --- 4. Experiments ---------------------------------------------------
+\section{Experiments}
+\label{sec:exp}
+Experimental setup: robot model, initial conditions, controller gains
+(see \texttt{config/params.yaml}), and evaluation metrics. Each experiment is
+documented in \texttt{docs/experiments/exp\_NN\_*.md}.
+
+% Example figure (uncomment after running an experiment that writes the PNG):
+% \begin{figure}[t]
+%   \centering
+%   \includegraphics[width=\columnwidth]{free_response.png}
+%   \caption{Free response of the double pendulum (EXP-01).}
+%   \label{fig:free_response}
+% \end{figure}
+
+% --- 5. Results & Discussion ------------------------------------------
+\section{Results and Discussion}
+\label{sec:results}
+Report quantitative results.
+
+\begin{table}[t]
+  \centering
+  \caption{Closed-loop performance metrics.}
+  \label{tab:metrics}
+  \begin{tabular}{lcc}
+    \toprule
+    Metric & Baseline & Proposed \\
+    \midrule
+    Settling time [s] & -- & -- \\
+    RMSE              & -- & -- \\
+    Control effort    & -- & -- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% --- 6. Conclusion ----------------------------------------------------
+\section{Conclusion}
+\label{sec:conclusion}
+Summary, limitations, and future work.
+
+% --- Bibliography -----------------------------------------------------
+% Uses the shared bib file at the repository root: references/references.bib
+\bibliographystyle{IEEEtran}
+\bibliography{../../references/references}
+
+\end{document}

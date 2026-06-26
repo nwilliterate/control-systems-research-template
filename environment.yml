@@ -1,0 +1,22 @@
+# Conda environment for the robot-control research template.
+# Pinocchio is distributed reliably through conda-forge (recommended on all OS,
+# and required on Windows where the PyPI wheel is unavailable).
+#
+#   conda env create -f environment.yml
+#   conda activate robot-control
+#
+name: robot-control
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy>=1.24
+  - scipy>=1.10
+  - matplotlib>=3.7
+  - pyyaml>=6.0
+  - pinocchio>=2.7      # rigid-body dynamics (Featherstone ABA, RNEA, CRBA)
+  - example-robot-data  # optional: ready-made URDFs (panda, ur5, ...)
+  - control>=0.9.4      # python-control
+  - spyder>=5.4         # MATLAB-like IDE
+  - pytest>=7.0
+  - pip

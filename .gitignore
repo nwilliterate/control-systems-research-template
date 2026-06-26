@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Build artifacts
+build/
+dist/
+
+# Spyder
+.spyproject/
+.spyderproject
+
+# Results (keep folder, ignore generated artifacts)
+results/data/**
+results/figures/**
+!results/data/.gitkeep
+!results/figures/.gitkeep
+*.npz
+*.npy
+
+# OMC / agent session state
+.omc/
+
+# Environments
+.venv/
+venv/
+env/
+
+# LaTeX build artifacts (keep .tex/.bib, ignore generated files)
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+docs/paper/*.pdf
+
+# OS
+.DS_Store
+Thumbs.db

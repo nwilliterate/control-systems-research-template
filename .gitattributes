@@ -1,0 +1,24 @@
+# Normalize line endings across OSes (important: this template mixes .ps1 and .sh).
+* text=auto eol=lf
+
+# Windows-native scripts keep CRLF; shell scripts MUST stay LF or they break on Unix.
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.sh  text eol=lf
+
+# Source/text files
+*.py    text
+*.md    text
+*.toml  text
+*.yaml  text
+*.yml   text
+*.urdf  text
+*.tex   text
+*.bib   text
+
+# Binary (never normalize)
+*.png binary
+*.jpg binary
+*.pdf binary
+*.npz binary
+*.npy binary
