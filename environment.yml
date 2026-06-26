@@ -16,7 +16,11 @@ dependencies:
   - pyyaml>=6.0
   - pinocchio>=2.7      # rigid-body dynamics (Featherstone ABA, RNEA, CRBA)
   - example-robot-data  # optional: ready-made URDFs (panda, ur5, ...)
-  - control>=0.9.4      # python-control
+  - control>=0.9.4      # python-control: LQR, pole placement, state-space
+  - cvxpy>=1.4          # convex optimization: LMI/SDP, convex (linear) MPC
+  - sympy>=1.12         # symbolic state-space derivation / Jacobian cross-checks
+  - casadi>=3.6         # nonlinear MPC / autodiff (optimal control)
+  - slycot>=0.5         # python-control MIMO backend (place, care, hinfsyn)
   - spyder>=5.4         # MATLAB-like IDE
   - pytest>=7.0
   - pip

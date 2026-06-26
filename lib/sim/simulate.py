@@ -1,4 +1,4 @@
-"""Closed-loop simulation with a zero-order-hold (ZOH) controller.
+"""Closed-loop simulation of any plant with a zero-order-hold (ZOH) controller.
 
 The control input is computed once per fixed time step and held constant while the
 plant is integrated over that step. This is how a digital controller actually runs,
@@ -7,11 +7,14 @@ sub-stage:
 
 - A stateful controller (e.g. PID with an integrator) advances exactly once per
   step, not 4x per RK4 step.
-- The applied torque is known and logged for every step (needed for torque/energy
+- The applied input is known and logged for every step (needed for input/energy
   plots), instead of having to be re-derived afterwards.
 
-A controller is any callable ``controller(t, q, v) -> tau`` returning a joint-torque
-vector of shape (nv,). Build one with :func:`lib.controllers.factory.make_controller`.
+The simulator is plant-agnostic: it drives any :class:`lib.systems.plant.Plant`
+(the robot via :class:`lib.dynamics.robot_plant.RobotPlant`, an LTI
+:class:`lib.systems.state_space.StateSpace`, a cart-pole, ...). A controller is any
+callable ``controller(t, x) -> u`` returning an input vector of shape (nu,); build a
+robot one with :func:`lib.controllers.factory.make_controller`.
 """
 
 from __future__ import annotations
@@ -20,12 +23,11 @@ from typing import Callable, Tuple
 
 import numpy as np
 
-from lib.dynamics.forward_dynamics import state_derivative
-from lib.dynamics.robot_model import RobotModel
+from lib.systems.plant import Plant
 from lib.integrators.runge_kutta import rk4_step, rk45_step
 
-# A controller maps (time, positions, velocities) -> joint torques.
-Controller = Callable[[float, np.ndarray, np.ndarray], np.ndarray]
+# A controller maps (time, full state) -> control input.
+Controller = Callable[[float, np.ndarray], np.ndarray]
 
 
 def _step_fn(integrator: str):
@@ -38,25 +40,26 @@ def _step_fn(integrator: str):
     raise ValueError(f"unknown integrator {integrator!r} (use 'rk4' or 'rk45')")
 
 
-def simulate(robot: RobotModel, controller: Controller, x0: np.ndarray,
+def simulate(plant: Plant, controller: Controller, x0: np.ndarray,
              t_final: float, dt: float,
              integrator: str = "rk4") -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Simulate the closed loop with a zero-order-hold controller.
 
     Parameters
     ----------
-    robot      : RobotModel
-    controller : callable ``(t, q, v) -> tau`` returning shape (nv,) torques.
-    x0         : (nq + nv,) initial stacked state [q, v].
+    plant      : Plant
+        Any plant exposing ``nx``, ``nu`` and ``dynamics(x, u, t) -> xdot``.
+    controller : callable ``(t, x) -> u`` returning shape (nu,) inputs.
+    x0         : (nx,) initial state.
     t_final    : end time [s] (start time is 0).
     dt         : fixed time step [s].
     integrator : 'rk4' (default) or 'rk45'.
 
     Returns
     -------
-    t   : (N+1,) time grid [s].
-    x   : (N+1, nq+nv) state trajectory; row k is the state at t[k].
-    tau : (N, nv) applied torque held over step k (one row per step).
+    t : (N+1,) time grid [s].
+    x : (N+1, nx) state trajectory; row k is the state at t[k].
+    u : (N, nu) applied input held over step k (one row per step).
     """
     if dt <= 0:
         raise ValueError("dt must be positive")
@@ -65,20 +68,19 @@ def simulate(robot: RobotModel, controller: Controller, x0: np.ndarray,
 
     step = _step_fn(integrator)
     x0 = np.asarray(x0, dtype=float).ravel()
-    nq, nv = robot.nq, robot.nv
+    nu = plant.nu
 
     n_steps = int(np.ceil(t_final / dt - 1e-9))
     t = dt * np.arange(n_steps + 1)
     x = np.empty((n_steps + 1, x0.size), dtype=float)
-    tau = np.empty((n_steps, nv), dtype=float)
+    u = np.empty((n_steps, nu), dtype=float)
     x[0] = x0
 
     for k in range(n_steps):
-        q, v = x[k, :nq], x[k, nq:]
-        tau_k = np.asarray(controller(t[k], q, v), dtype=float)
-        tau[k] = tau_k
-        # Hold tau_k constant over the step (ZOH): the RHS ignores its own t/x torque.
-        f = lambda t_, x_: state_derivative(robot, x_, tau_k)
+        u_k = np.asarray(controller(t[k], x[k]), dtype=float).ravel()
+        u[k] = u_k
+        # Hold u_k constant over the step (ZOH): the RHS ignores its own t/x input.
+        f = lambda t_, x_: plant.dynamics(x_, u_k, t_)
         x[k + 1] = step(f, t[k], x[k], dt)
 
-    return t, x, tau
+    return t, x, u

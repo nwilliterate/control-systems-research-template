@@ -10,6 +10,7 @@ Requires Pinocchio (see environment.yml).
 import numpy as np
 
 from lib.dynamics.robot_model import RobotModel
+from lib.dynamics.robot_plant import RobotPlant
 from lib.sim.simulate import simulate
 from lib.utils.config import load_config, project_root
 from lib.utils.io import save_results
@@ -18,13 +19,15 @@ from lib.utils.plotting import plot_trajectory, save_figure
 cfg = load_config()
 
 # %% Build the plant; controller applies zero torque (free response)
+# The robot is wrapped as a Plant so it shares the generic simulate() loop.
 robot = RobotModel(project_root() / cfg.robot.urdf, gravity=cfg.robot.gravity)
-free_controller = lambda t, q, v: np.zeros(robot.nv)
+plant = RobotPlant(robot)
+free_controller = lambda t, x: np.zeros(plant.nu)
 
 # %% Simulate the free response
 x0 = np.concatenate([cfg.initial_state.q, cfg.initial_state.v])
-t, x, tau = simulate(robot, free_controller, x0, cfg.simulation.t_final,
-                     cfg.simulation.dt, integrator=cfg.simulation.integrator)
+t, x, u = simulate(plant, free_controller, x0, cfg.simulation.t_final,
+                   cfg.simulation.dt, integrator=cfg.simulation.integrator)
 
 # %% Plot & save
 fig = plot_trajectory(

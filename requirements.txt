@@ -5,7 +5,16 @@ matplotlib>=3.7
 pyyaml>=6.0
 
 # Control engineering
-control>=0.9.4          # python-control: LQR, transfer functions, state-space
+control>=0.9.4          # python-control: LQR, pole placement, state-space
+
+# Optimization / symbolic (state-space control design)
+cvxpy>=1.4             # convex optimization: LMI/SDP, convex (linear) MPC
+sympy>=1.12            # symbolic state-space derivation / Jacobian cross-checks
+
+# Extra optimal-/robust-control tooling lives in the `opt` extra (not pinned here
+# to keep the plain-pip path light): casadi (nonlinear MPC, autodiff) and slycot
+# (python-control MIMO routines: place, care, hinfsyn).
+#   pip install -e '.[opt]'   |   uv sync --extra opt
 
 # Rigid-body dynamics (Pinocchio) is intentionally NOT installed here, so this
 # plain-pip path stays pure-numpy (matching the README). Get Pinocchio via conda

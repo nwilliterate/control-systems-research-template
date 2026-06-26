@@ -10,14 +10,22 @@ simulation:
   t_final: 5.0       # [s] total simulation time
   integrator: rk4    # rk4 | rk45
 
+# Which plant to control. The robot is one plant among many; the state-space
+# examples (lib/systems/examples.py) need no Pinocchio.
+plant:
+  type: robot        # robot | double_integrator | mass_spring_damper | cart_pole
+  mass_spring_damper: { m: 1.0, k: 1.0, c: 0.2 }              # [kg], [N/m], [N*s/m]
+  cart_pole: { m_cart: 1.0, m_pole: 0.1, length: 0.5, gravity: 9.81 }
+
 robot:
   # Path is relative to the project root.
   urdf: models/double_pendulum.urdf
   gravity: [0.0, 0.0, -9.81]   # [m/s^2]
 
 initial_state:
-  q: [0.5, 0.0]      # [rad] joint positions
-  v: [0.0, 0.0]      # [rad/s] joint velocities
+  q: [0.5, 0.0]      # [rad] joint positions (robot plant)
+  v: [0.0, 0.0]      # [rad/s] joint velocities (robot plant)
+  x: [1.0, 0.0]      # full state x0 for a state-space plant (plant.type != robot)
 
 controller:
   type: computed_torque   # pid | computed_torque | lqr | none
@@ -33,11 +41,19 @@ controller:
     kd: [20.0, 20.0]
 
   lqr:
-    Q_diag: [10.0, 10.0, 1.0, 1.0]   # state weights [q, v]
-    R_diag: [0.1, 0.1]               # input weights
+    Q_diag: [10.0, 10.0, 1.0, 1.0]   # state weights [q, v]  (robot plant)
+    R_diag: [0.1, 0.1]               # input weights         (robot plant)
+
+  # LQR weights used when plant.type != robot (design on the linearized plant).
+  # Sizes must match the chosen plant's nx / nu (default sized for the 2-state
+  # double_integrator / mass_spring_damper).
+  state_lqr:
+    Q_diag: [10.0, 1.0]
+    R_diag: [0.1]
 
 reference:
-  q_des: [0.0, 0.0]   # [rad] setpoint (regulation task)
+  q_des: [0.0, 0.0]   # [rad] setpoint (robot regulation task)
+  x_des: [0.0, 0.0]   # state-space setpoint (used when plant.type != robot)
 
 output:
   save_data: true

@@ -19,16 +19,24 @@ dependencies = [
     "scipy>=1.10",
     "matplotlib>=3.7",
     "pyyaml>=6.0",
-    "control>=0.9.4",
+    "control>=0.9.4",   # python-control: LQR, pole placement, state-space
+    "cvxpy>=1.4",       # convex optimization: LMI/SDP, convex (linear) MPC
+    "sympy>=1.12",      # symbolic state-space derivation / Jacobian cross-checks
 ]
 
-# Optional runtime feature: rigid-body dynamics via Pinocchio.
-# Pinocchio ships via conda on Windows (no PyPI wheel); the `pin` wheel works
-# elsewhere. Mirrors requirements.txt. Install with:
-#   pip install -e '.[dynamics]'      # pip
-#   uv sync --extra dynamics          # uv (Linux/macOS; Windows -> conda)
+# Optional runtime features.
+#   dynamics : rigid-body dynamics via Pinocchio (the robot plant). Ships via conda
+#              on Windows (no PyPI wheel); the `pin` wheel works elsewhere.
+#   opt      : extra optimal-/robust-control tooling. casadi (nonlinear MPC,
+#              autodiff) and slycot (python-control's MIMO routines: place, care,
+#              hinfsyn). slycot ships wheels for Windows/macOS/Linux; conda is the
+#              fallback if no wheel exists for your platform.
+# Install with, e.g.:
+#   pip install -e '.[dynamics,opt]'   # pip
+#   uv sync --extra dynamics --extra opt
 [project.optional-dependencies]
 dynamics = ["pin>=2.7 ; platform_system != 'Windows'"]
+opt = ["casadi>=3.6", "slycot>=0.5"]
 
 # Dev tooling (PEP 735). uv installs this group by default with `uv sync`.
 # pip users: `pip install --group dev` (pip>=25.1) or just `pip install pytest`.
