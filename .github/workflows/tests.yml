@@ -1,0 +1,26 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Install the pure-numpy scientific stack (NOT Pinocchio): the
+      # Pinocchio-dependent tests (tests/test_sim.py) skip automatically when it
+      # is absent, so this job verifies the OS-independent core on every push.
+      - name: Install dependencies
+        run: pip install numpy scipy matplotlib pyyaml control pytest
+
+      - name: Run tests
+        run: pytest -q

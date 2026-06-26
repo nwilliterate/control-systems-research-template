@@ -1,6 +1,8 @@
 # Robot-Control Research Template
 
 [![Use this template](https://img.shields.io/badge/Use%20this%20template-2ea44f?logo=github&logoColor=white)](https://github.com/nwilliterate/robot-control-research-template/generate)
+[![tests](https://github.com/nwilliterate/robot-control-research-template/actions/workflows/tests.yml/badge.svg)](https://github.com/nwilliterate/robot-control-research-template/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white)
 ![Stack](https://img.shields.io/badge/stack-Pinocchio%20%2B%20python--control%20%2B%20Runge--Kutta-orange)
 
