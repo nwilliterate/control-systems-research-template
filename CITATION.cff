@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this template in academic work, please cite it."
+title: "Robot-Control Research Template"
+abstract: >-
+  A MATLAB/Spyder-style Python template for academic robot-control research,
+  AI-collaboration ready (CLAUDE.md + AGENTS.md). Stack: Pinocchio for
+  rigid-body dynamics, python-control, and custom Runge-Kutta integrators.
+type: software
+authors:
+  - family-names: "Jo"
+    given-names: "Seonghyeon"
+version: 0.1.0
+date-released: "2026-06-26"
+license: MIT
+repository-code: "https://github.com/nwilliterate/robot-control-research-template"
+keywords:
+  - robotics
+  - robot control
+  - pinocchio
+  - python-control
+  - runge-kutta
+  - research template
