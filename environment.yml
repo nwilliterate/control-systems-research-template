@@ -1,11 +1,11 @@
-# Conda environment for the robot-control research template.
+# Conda environment for the control-systems research template.
 # Pinocchio is distributed reliably through conda-forge (recommended on all OS,
 # and required on Windows where the PyPI wheel is unavailable).
 #
 #   conda env create -f environment.yml
-#   conda activate robot-control
+#   conda activate control-systems
 #
-name: robot-control
+name: control-systems
 channels:
   - conda-forge
 dependencies:

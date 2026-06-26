@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest. This repository is a **template** for robot-control
+Thanks for your interest. This repository is a **template** for control-systems
 research; contributions that keep it small, readable, and reusable are welcome.
 
 ## Ground rules
@@ -17,7 +17,7 @@ uv sync                               # recommended: core + dev tools (pytest) i
 uv sync --extra dynamics              #   add Pinocchio on Linux/macOS
 # or full Pinocchio env everywhere (required on Windows):
 conda env create -f environment.yml
-conda activate robot-control
+conda activate control-systems
 # or pure-numpy parts only:
 pip install -r requirements.txt
 ```

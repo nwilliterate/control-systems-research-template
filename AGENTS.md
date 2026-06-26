@@ -37,7 +37,7 @@ uv sync --extra dynamics                      # + Pinocchio (Linux/macOS; Window
 uv sync --extra opt                           # + CasADi + slycot
 uv sync --extra dynamics --extra opt          # everything
 # or Pinocchio via conda (required on Windows):
-conda env create -f environment.yml && conda activate robot-control
+conda env create -f environment.yml && conda activate control-systems
 # or plain pip, core deps only:
 pip install -r requirements.txt
 pip install -e '.[opt]'                       # add opt extras on top

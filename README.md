@@ -103,7 +103,7 @@ For the full Pinocchio stack everywhere (and required on Windows), conda is most
 
 ```bash
 conda env create -f environment.yml
-conda activate robot-control
+conda activate control-systems
 ```
 
 Or, with plain pip (pure-numpy/scipy/cvxpy/sympy parts; no Pinocchio):
