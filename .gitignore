@@ -24,6 +24,11 @@ results/figures/**
 # OMC / agent session state
 .omc/
 
+# Agent harness: local-only overrides and the verification-gate marker.
+# Shared harness (.claude/settings.json, agents, commands) IS committed.
+.claude/settings.local.json
+.claude/.verify-dirty
+
 # Environments
 .venv/
 venv/

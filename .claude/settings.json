@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(python scripts/verify.py)",
+      "Bash(python scripts/new_experiment.py:*)",
+      "Bash(python main.py)",
+      "Bash(python -m experiments.:*)",
+      "Bash(pytest:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(uv run:*)",
+      "Bash(uv sync:*)",
+      "Bash(uv lock)",
+      "Bash(ruff check:*)",
+      "Bash(make test)",
+      "Bash(make verify)",
+      "Bash(make demo)",
+      "Bash(make run01)",
+      "Bash(make new-experiment:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "python scripts/hooks/mark_dirty.py" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python scripts/hooks/gate.py" }
+        ]
+      }
+    ]
+  }
+}
