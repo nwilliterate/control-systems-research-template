@@ -51,6 +51,25 @@ env/
 *.toc
 docs/paper/*.pdf
 
+# Secrets & credentials — never commit to a public template.
+# (These block accidental FILE commits; they do NOT scrub the commit-author
+#  email in git metadata — use a GitHub noreply email for that.)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa
+id_ed25519
+*.p12
+*.pfx
+.pypirc
+.netrc
+secrets.*
+credentials.*
+*_secret*
+*.credentials.json
+
 # OS
 .DS_Store
 Thumbs.db

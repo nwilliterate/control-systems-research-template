@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this template in academic work, please cite it."
-title: "Robot-Control Research Template"
+title: "Control-Systems Research Template"
 abstract: >-
   A MATLAB/Spyder-style Python template for academic robot-control research,
   AI-collaboration ready (CLAUDE.md + AGENTS.md). Stack: Pinocchio for
@@ -12,7 +12,7 @@ authors:
 version: 0.1.0
 date-released: "2026-06-26"
 license: MIT
-repository-code: "https://github.com/nwilliterate/robot-control-research-template"
+repository-code: "https://github.com/nwilliterate/control-systems-research-template"
 keywords:
   - robotics
   - robot control
