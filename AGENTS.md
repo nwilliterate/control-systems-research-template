@@ -41,7 +41,12 @@ results/figures       Saved plots (git-ignored)   results/data  Saved .npz (git-
 tests/                pytest units (all pure-numpy code runs without Pinocchio)
 docs/                 Research writing: methodology/, experiments/exp_NN_*.md,
                       literature/, paper/, research_notes.md
-scripts/              Agent harness core: verify.py (gate), new_experiment.py (scaffold)
+knowledge/            Source-grounded knowledge store: claims/*.md — one verifiable,
+                      cited fact per file (agents read/write; CI gates traceability)
+references/           references.bib (BibTeX identity) + pdfs/manifest.yaml (hashes;
+                      the PDFs themselves are git-ignored)
+scripts/              Agent harness core: verify.py (code gate), verify_knowledge.py
+                      (knowledge gate), new_experiment.py / new_claim.py (scaffolders)
 main.py               Concise end-to-end demo (plant-agnostic)
 ```
 
@@ -79,6 +84,12 @@ main.py               Concise end-to-end demo (plant-agnostic)
 4. Save figures/data through `lib/utils` (per-run subdirs) so runs are reproducible.
 5. Record methods in `docs/methodology/`, reading notes in `docs/literature/`, a
    one-line summary in `docs/research_notes.md`. Draft the paper in `docs/paper/`.
+6. Capture durable, source-backed facts as knowledge atoms:
+   `python scripts/new_claim.py <id> --cite <bibkey> --page <N> "<claim>"` (or
+   `/new-claim`), paste the **verbatim** quote, and register the source in
+   `references/references.bib` (+ `references/pdfs/manifest.yaml`). Never overwrite a
+   fact — supersede it (`supersedes` / `superseded_by`) so the history survives.
+   `python scripts/verify_knowledge.py` must exit 0.
 
 ## Adding a new plant
 A plant subclasses `Plant` (`lib/systems/plant.py`) and exposes `nx`, `nu`,
@@ -97,14 +108,24 @@ not merely requested:
   core imports without Pinocchio) + advisory ruff (only if installed). Exit 0 = safe to
   claim done. Run it, or `make verify`, before reporting completion.
 - **`scripts/new_experiment.py`** — deterministic experiment scaffolder (rule 8).
+- **`scripts/verify_knowledge.py`** — the knowledge gate. Rejects any `knowledge/claims/`
+  atom that isn't traceable to a source: unknown/missing BibTeX `cite`, no `page` or
+  verbatim quote for `extracted`, no `derived_from` for `inferred`, or a broken
+  supersede/contradict link. Runs in CI and via `make verify-knowledge`. Pairs with
+  `scripts/new_claim.py` (atom scaffolder) and `scripts/hash_pdf.py` (manifest hashes).
 - **Claude Code glue** under `.claude/` (other tools ignore it, but may read it):
-  - `settings.json` — a `Stop` hook runs the gate when code changed this session and
-    blocks completion on failure; a `PostToolUse` hook arms it; a permissions allowlist
-    pre-approves pytest/uv/python/git.
+  - `settings.json` — a `Stop` hook runs the code gate when code changed this session and
+    blocks completion on failure; a second `Stop` hook (`knowledge_reminder.py`) nudges
+    once to persist a knowledge atom when a source was engaged but none was written;
+    `PostToolUse` hooks arm both; a permissions allowlist pre-approves pytest/uv/python/git.
   - `agents/control-verifier.md` — an independent verification subagent (physical sanity
     checks: equilibria, integrator convergence, closed-loop stability, energy). Readable
     as plain markdown by any tool.
-  - `commands/new-experiment.md` — the `/new-experiment` slash command.
+  - `commands/new-experiment.md` / `commands/new-claim.md` — the `/new-experiment` and
+    `/new-claim` slash commands.
+- **Knowledge store** — see `knowledge/README.md`. AI makes mistakes, so no fact is kept
+  unless it is anchored to a book/journal: one claim per file, each citing a real source
+  with a verbatim quote, updated by supersession (never overwrite), PDFs linked by hash.
 
 ## Build / test commands
 ```bash

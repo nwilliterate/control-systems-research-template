@@ -24,10 +24,15 @@ results/figures/**
 # OMC / agent session state
 .omc/
 
-# Agent harness: local-only overrides and the verification-gate marker.
+# Agent harness: local-only overrides and the verification-gate markers.
 # Shared harness (.claude/settings.json, agents, commands) IS committed.
 .claude/settings.local.json
 .claude/.verify-dirty
+.claude/.knowledge-dirty
+
+# Source PDFs: large / often copyrighted. The committed index is
+# references/pdfs/manifest.yaml (cite + sha256 + url); the PDFs stay local.
+references/pdfs/*.pdf
 
 # Environments
 .venv/

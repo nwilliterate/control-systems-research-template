@@ -29,12 +29,19 @@
         "hooks": [
           { "type": "command", "command": "python scripts/hooks/mark_dirty.py" }
         ]
+      },
+      {
+        "matcher": "Read|Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "python scripts/hooks/mark_sources.py" }
+        ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "python scripts/hooks/gate.py" }
+          { "type": "command", "command": "python scripts/hooks/gate.py" },
+          { "type": "command", "command": "python scripts/hooks/knowledge_reminder.py" }
         ]
       }
     ]
