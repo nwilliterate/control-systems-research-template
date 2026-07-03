@@ -2,9 +2,13 @@ cff-version: 1.2.0
 message: "If you use this template in academic work, please cite it."
 title: "Control-Systems Research Template"
 abstract: >-
-  A MATLAB/Spyder-style Python template for academic robot-control research,
-  AI-collaboration ready (CLAUDE.md + AGENTS.md). Stack: Pinocchio for
-  rigid-body dynamics, python-control, and custom Runge-Kutta integrators.
+  A MATLAB/Spyder-style Python template for academic control-systems research,
+  organised around a general state-space plant abstraction (x' = f(x, u, t)) and
+  AI-collaboration ready (CLAUDE.md + AGENTS.md). Stack: a Plant ABC + LTI tools,
+  python-control (LQR, pole placement), cvxpy (MPC / convex optimisation), SymPy,
+  and custom Runge-Kutta integrators. A Pinocchio-backed robot is the flagship
+  example plant, alongside pure-NumPy plants (double integrator, mass-spring-damper,
+  cart-pole).
 type: software
 authors:
   - family-names: "Jo"
@@ -14,9 +18,16 @@ date-released: "2026-06-26"
 license: MIT
 repository-code: "https://github.com/nwilliterate/control-systems-research-template"
 keywords:
-  - robotics
-  - robot control
-  - pinocchio
+  - control systems
+  - control theory
+  - state-space
+  - optimal control
+  - LQR
+  - model predictive control
+  - pole placement
   - python-control
+  - cvxpy
   - runge-kutta
+  - pinocchio
+  - robotics
   - research template
