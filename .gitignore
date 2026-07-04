@@ -24,10 +24,15 @@ results/figures/**
 # OMC / agent session state
 .omc/
 
-# Agent harness: local-only overrides and the verification-gate marker.
+# Agent harness: local-only overrides and the verification-gate markers.
 # Shared harness (.claude/settings.json, agents, commands) IS committed.
 .claude/settings.local.json
 .claude/.verify-dirty
+.claude/.knowledge-dirty
+
+# Source PDFs: large / often copyrighted. The committed index is
+# references/pdfs/manifest.yaml (cite + sha256 + url); the PDFs stay local.
+references/pdfs/*.pdf
 
 # Environments
 .venv/
@@ -45,6 +50,25 @@ env/
 *.synctex.gz
 *.toc
 docs/paper/*.pdf
+
+# Secrets & credentials — never commit to a public template.
+# (These block accidental FILE commits; they do NOT scrub the commit-author
+#  email in git metadata — use a GitHub noreply email for that.)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa
+id_ed25519
+*.p12
+*.pfx
+.pypirc
+.netrc
+secrets.*
+credentials.*
+*_secret*
+*.credentials.json
 
 # OS
 .DS_Store

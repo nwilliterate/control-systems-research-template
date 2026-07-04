@@ -1,0 +1,17 @@
+# PDF manifest — the committed index of source PDFs.
+#
+# The PDFs themselves live in this folder but are GIT-IGNORED (large, often
+# copyrighted). This manifest is committed so anyone cloning the repo can confirm
+# they hold the *same edition* by matching the sha256, and so knowledge/claims/
+# atoms can be flagged stale if a source ever changes.
+#
+# One entry per source. `cite` MUST match a BibTeX key in ../references.bib.
+# Compute the hash with:  python scripts/hash_pdf.py references/pdfs/<file>.pdf
+#
+# entries:
+#   - cite: featherstone2008rigid
+#     file: featherstone2008rigid.pdf
+#     sha256: <64-hex>            # paste from scripts/hash_pdf.py
+#     source_url: https://...     # where to obtain it (DOI / publisher / library)
+
+entries: []
