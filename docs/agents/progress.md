@@ -6,6 +6,34 @@ the next planned goal.
 
 ## 2026-07-05
 
+- What was done: Added repository-specific naming rules for directories, files,
+  variables, functions, classes, struct-like Python containers, constants,
+  private helpers, tests, and control-systems notation exceptions.
+- Current status/result: Naming guidance now follows this Python research
+  repository's existing `snake_case` / `PascalCase` style and explicitly avoids
+  importing `pa_control`'s C++-oriented `m_`, `p_`, and `camelCase` conventions.
+- Next planned goals: Keep naming exceptions tied to standard control notation
+  and documented units/shapes instead of broad abbreviation use.
+
+- What was done: Added four additional coding-rule groups adapted from the
+  `pa_control` rules: helper extraction, comments/docstrings, error handling
+  and logging, and small-scope development.
+- Current status/result: The imported rules were adjusted for this Python
+  research-template structure, preserving the existing `lib/`, `experiments/`,
+  units/shapes, and verification workflow instead of bringing over C++/RT or
+  apps/modules-specific rules.
+- Next planned goals: Keep future coding-rule imports selective so they do not
+  conflict with the repository's existing control-systems template conventions.
+
+- What was done: Added repository-specific commit message rules to
+  `docs/agents/coding_rules.md` based on the existing history's lightweight
+  Conventional Commit pattern (`docs:`, `fix:`, `feat:`, `chore:`, `build:`).
+- Current status/result: Commit guidance now matches this repository's observed
+  style instead of importing the separate `.gitmessage` / `[header]` / `[desc]`
+  workflow from `pa_control`.
+- Next planned goals: Use the documented commit message pattern for future
+  commits unless the repository adopts a stricter template later.
+
 - What was done: Added the `docs/agents` structure adapted from the
   `pa_control` workflow for this control-systems research template. Moved the
   detailed repository rules into `docs/agents/coding_rules.md`, added

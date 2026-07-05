@@ -95,6 +95,93 @@ main.py               Concise end-to-end demo (plant-agnostic)
 - Keep comments concise. Use comments for physical assumptions, non-obvious
   numerical choices, or invariants that are easy to break.
 
+## Naming Rules
+
+- Use lowercase `snake_case` for directory names and Python file names.
+- Use the established experiment/write-up pairing:
+  `experiments/run_NN_slug.py` and `docs/experiments/exp_NN_slug.md`.
+- Use lowercase `snake_case` for ordinary variables, functions, methods,
+  keyword arguments, config keys, and dataclass fields.
+- Use `PascalCase` for classes and type-like containers such as dataclasses,
+  `NamedTuple`, `TypedDict`, and enums.
+- Use uppercase `SNAKE_CASE` for module-level constants that behave as fixed
+  constants.
+- Use a leading underscore only for internal helpers, private module variables,
+  or implementation details that should not be part of the public API.
+- Do not use C++-style member prefixes such as `m_` or pointer prefixes such as
+  `p_` in Python code.
+- Do not use excessive abbreviations. Names should remain meaningful and
+  reviewable.
+- Standard control-systems abbreviations are allowed when they match common
+  notation: `x`, `u`, `y`, `A`, `B`, `C`, `D`, `K`, `Q`, `R`, `dt`, `nx`, `nu`,
+  `ny`, `q`, `v`, `qdd`, `tau`, `M`, `g`, `x0`, `u_max`, `x_ref`, `x_des`,
+  `q_des`, and similar local equation variables.
+- Do not rename standard mathematical symbols into verbose names when the
+  equation notation is clearer and the docstring states units and shapes.
+- Name functions by the action/result they provide using Python `snake_case`,
+  for example `build_plant`, `linearize_plant`, `lqr_gain`, `rk4_step`, and
+  `save_trajectory`.
+- Class names should name the concept or object, for example `Plant`,
+  `StateSpace`, `RobotPlant`, and `StateFeedback`.
+- Boolean variables and functions should read as predicates where practical,
+  such as `is_controllable`, `has_pinocchio`, or `save_figures`.
+- Test files use `test_*.py`; test functions use `test_*`.
+
+## Helper Extraction
+
+- Do not over-extract helper functions. Keep logic inline by default, and
+  extract a helper only when at least one of these is true:
+  - The same logic is needed in two or more real call sites.
+  - The helper makes the call site materially clearer by hiding a noisy block
+    behind a well-named operation.
+  - The helper is needed to test or isolate a meaningful numerical or physical
+    step.
+- Helpers added only for anticipated reuse, aesthetic symmetry, or a notional
+  line-count limit should be inlined back.
+
+## Comments And Docstrings
+
+- For Python code, keep comments and docstrings concise.
+- Reusable `lib/` routines still need docstrings that state physical units and
+  array shapes.
+- Do not use verbose `description` / `input` / `output` / `todo` docstring
+  templates unless explicitly requested.
+- Put comments directly above complex algorithmic logic, physical assumptions,
+  numerical tolerances, or invariants that are easy to break.
+- Avoid comments that restate obvious code.
+
+## Error Handling And Logging
+
+- Wherever an error case can occur, make the error visibly detectable with a
+  clear exception, assertion, or log message.
+- Use `raise` for invalid external inputs and runtime failures that callers
+  must handle.
+- Use `assert` for internal development checks and invariants.
+- Library code under `lib/` should use `logging` instead of `print()`.
+- In library modules that log, use `logger = logging.getLogger(__name__)`.
+- Configure logging only at entry points such as `main.py`, scripts, or
+  experiments. Do not configure logging inside reusable libraries.
+- During exception handling, preserve the original context. Use
+  `logger.exception("...")` when logging an exception before re-raising.
+- Log messages should be actionable: include the failing path, parameter, unit,
+  tolerance, or alternative when that context matters.
+- `print()` is acceptable in experiment scripts and scaffolders when it is part
+  of the notebook-style narrative or command-line user feedback.
+
+## Development Scope
+
+- In one development step, implement one small, clearly scoped responsibility.
+- The default implementation unit should be one function, one method, one
+  experiment slice, or one small interface.
+- Do not implement multiple responsibilities together in a single step unless
+  the user explicitly asks for a larger slice.
+- Do not add surrounding features, abstractions, or refactors that the user did
+  not request.
+- For larger features, add the minimum useful scaffold first and extend behavior
+  step by step in later work.
+- Keep each `lib/` module independently understandable and avoid unnecessary
+  dependencies.
+
 ## Research Workflow
 
 1. New study:
@@ -117,6 +204,25 @@ main.py               Concise end-to-end demo (plant-agnostic)
    `references/references.bib` plus `references/pdfs/manifest.yaml`.
    Never overwrite a fact; supersede it with `supersedes` / `superseded_by` so
    history survives. `python scripts/verify_knowledge.py` must exit 0.
+
+## Commit Message Rules
+
+- Use a concise Conventional Commit-style subject by default:
+  `<type>: <summary>`.
+- Prefer the commit types already used in this repository history:
+  - `docs`: documentation, research writing, citation metadata, or agent docs.
+  - `fix`: bug fixes, stale-reference corrections, or safety hardening.
+  - `feat`: new template capability, scaffold, workflow, or user-facing
+    behavior.
+  - `chore`: repository maintenance, agent harness work, or non-user-facing
+    upkeep.
+  - `build`: dependency, packaging, environment, or build-system changes.
+- Keep the subject line short and specific. Name the changed behavior or
+  structure, not the tool that made the change.
+- Use a plain descriptive subject only when the change is a repository-wide
+  rename, migration, or merge-style change that does not fit the common types.
+- Do not use decorative emoji or AI-generated watermarks in commit messages.
+- Before committing, stage only the intended files and review the staged diff.
 
 ## Adding A New Plant
 
