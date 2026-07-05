@@ -1,13 +1,16 @@
 # CLAUDE.md
 
-This project keeps a **single source of truth** for AI collaboration rules in
-**[`AGENTS.md`](./AGENTS.md)** — a vendor-neutral file that any AI tool (Claude Code,
-Codex, Cursor, Copilot, Gemini, …) or human can read.
+This project keeps a vendor-neutral AI collaboration entrypoint in
+[`AGENTS.md`](./AGENTS.md). Read it first.
 
-**Read [`AGENTS.md`](./AGENTS.md) now and follow it.** It covers the project overview,
-directory map, coding style & naming, the hard rules, the research workflow, adding a
-new plant, the verification harness, build/test commands, and the definition of done.
+The detailed agent documents live under `docs/agents/`:
 
-Claude Code specifics (the `control-verifier` subagent, the verification/scaffolding
-hooks, the permissions allowlist, and the `/new-experiment` command) live under
-`.claude/` and are summarized in the **"Agent harness"** section of `AGENTS.md`.
+- [`docs/agents/coding_rules.md`](./docs/agents/coding_rules.md) - coding and
+  research-code rules
+- [`docs/agents/design.md`](./docs/agents/design.md) - global project design
+- [`docs/agents/personality.md`](./docs/agents/personality.md) - collaboration
+  persona
+- [`docs/agents/progress.md`](./docs/agents/progress.md) - running progress log
+
+Claude Code specifics, if present under `.claude/`, are tool glue only. The
+repository policy remains `AGENTS.md` plus `docs/agents/`.
