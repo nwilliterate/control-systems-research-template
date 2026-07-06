@@ -25,34 +25,13 @@ matters more than cleverness**.
 
 ## Directory Map
 
-```text
-lib/                  Reusable toolbox - import from here, never inline into scripts
-  systems/            Plant-agnostic core (pure NumPy/SciPy - NO Pinocchio)
-    plant.py          Plant ABC: nx, nu, dynamics(x,u,t)->xdot, output(x,u,t)->y
-    state_space.py    StateSpace LTI x'=Ax+Bu, y=Cx+Du; controllability helpers
-    discretize.py     c2d(A,B,dt): ZOH exact discretization via matrix exponential
-    linearize.py      linearize_plant(plant,x0,u0): central-difference A,B Jacobians
-    examples.py       double_integrator(), mass_spring_damper(), CartPole
-    build.py          build_plant(cfg): maps config plant.type -> concrete Plant
-  dynamics/           Robot plant - Pinocchio rigid-body dynamics (imports confined here)
-  integrators/        Runge-Kutta: rk4_step / rk45_step
-  controllers/        Control laws (t,x)->u: pid, computed_torque, lqr, state_feedback,
-                      pole_placement, mpc, factory (robot), build (plant-agnostic)
-  sim/                simulate(plant,controller,x0,t_final,dt,integrator)->(t,x,u)
-  utils/              Plotting, IO, config loading
-experiments/          Spyder cell scripts (# %%); one per study: run_NN_*.py
-models/               URDF robot descriptions
-config/params.yaml    ALL tunable numbers (sim, plant, robot, controller, references)
-results/figures       Saved plots (git-ignored)
-results/data          Saved .npz files (git-ignored)
-tests/                pytest units (all pure-numpy code runs without Pinocchio)
-docs/                 Research writing: methodology/, experiments/, literature/, paper/
-docs/agents/          Agent-facing rules, design notes, persona, progress log
-knowledge/            Source-grounded knowledge atoms: claims/*.md
-references/           references.bib + pdfs/manifest.yaml (PDFs are git-ignored)
-scripts/              verify.py, verify_knowledge.py, new_experiment.py, new_claim.py
-main.py               Concise end-to-end demo (plant-agnostic)
-```
+The canonical directory layout is maintained in
+[`README.md`](../../README.md#directory-layout) as the single owner. Read it there;
+do not duplicate the tree in this file. Boundaries that the rules below depend on:
+`lib/` is the reusable toolbox, `lib/systems/` is pure NumPy/SciPy with no Pinocchio,
+`lib/dynamics/` confines all Pinocchio imports, `experiments/` holds Spyder scripts,
+`config/params.yaml` holds all tunables, and `scripts/` holds the verification and
+scaffolding gates.
 
 ## Hard Rules
 
@@ -108,8 +87,6 @@ main.py               Concise end-to-end demo (plant-agnostic)
   constants.
 - Use a leading underscore only for internal helpers, private module variables,
   or implementation details that should not be part of the public API.
-- Do not use C++-style member prefixes such as `m_` or pointer prefixes such as
-  `p_` in Python code.
 - Do not use excessive abbreviations. Names should remain meaningful and
   reviewable.
 - Standard control-systems abbreviations are allowed when they match common

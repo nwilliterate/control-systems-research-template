@@ -4,6 +4,21 @@ Newest entries go first. Each completed coding task or substantial
 research-documentation task should record what changed, the current result, and
 the next planned goal.
 
+## 2026-07-06
+
+- What was done: Ran an integration review of the new `docs/agents/` structure
+  against `main` and applied the resulting fixes. Repointed the
+  `control-verifier` subagent to `docs/agents/coding_rules.md` for the DoD
+  (the router `AGENTS.md` no longer holds it), replaced the duplicated
+  directory map in `coding_rules.md` with a pointer to the single owner in
+  `README.md`, and dropped ported `pa_control` C++ ceremony (the `m_`/`p_`
+  prefix prohibition and the `default` design-guide sentinel).
+- Current status/result: The split now preserves every existing project policy
+  with no duplicated directory map and no dangling harness pointer. Changes are
+  documentation-only; no `lib/` or `scripts/` code was touched.
+- Next planned goals: Confirm the branch merges cleanly, then decide whether the
+  new progress-log duty and `personality.md` persona stay as permanent policy.
+
 ## 2026-07-05
 
 - What was done: Added repository-specific naming rules for directories, files,

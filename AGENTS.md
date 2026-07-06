@@ -12,8 +12,7 @@ control-systems research repository. Detailed guidance lives under
 - For every coding task, read and follow `docs/agents/coding_rules.md` first.
 - For persona and communication style, also read
   `docs/agents/personality.md`.
-- `docs/agents/design.md` is the global project design guide. If that file is
-  ever changed to exactly `default`, do not use it as design guidance.
+- `docs/agents/design.md` is the global project design guide.
 - `docs/agents/progress.md` is the running work log. After completing any
   coding task or substantial research-documentation task, update it with:
   - what was done,
