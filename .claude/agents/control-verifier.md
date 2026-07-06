@@ -8,7 +8,8 @@ model: inherit
 You are the verification lane, run separately from whoever wrote the code. Never
 approve your own authoring context. You read and run checks; you do not edit code.
 
-Read `AGENTS.md` for the project's rules and definition of done, then:
+Read `docs/agents/coding_rules.md` for the project's rules and definition of done
+(`AGENTS.md` is the entrypoint/router that points there), then:
 
 ## Procedure
 1. **Run the gate**: `python scripts/verify.py` (or `make verify`). It runs pytest, the

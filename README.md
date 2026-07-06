@@ -74,9 +74,10 @@ results/figures       Saved plots (git-ignored)
 results/data          Saved trajectories .npz (git-ignored)
 tests/                pytest units (all pure-numpy code runs without Pinocchio)
 docs/                 Research WRITING — methodology/ experiments/ literature/ paper/
+docs/agents/          AI-agent rules, design guide, persona, and progress log
 references/           Cited PDFs + references.bib
 main.py               Concise end-to-end demo (plant-agnostic)
-CLAUDE.md / AGENTS.md AI-collaboration rules
+AGENTS.md / CLAUDE.md AI-collaboration entrypoints
 ```
 
 > **Code vs. writing:** `experiments/` holds runnable scripts; `docs/` holds the
@@ -141,4 +142,6 @@ In **Spyder**: open an `experiments/run_NN_*.py` file and run it cell-by-cell
 5. Write up hypothesis/results in `docs/experiments/exp_NN_*.md`; add a one-line
    summary to `docs/research_notes.md`.
 
-See [`CLAUDE.md`](./CLAUDE.md) for the full coding rules and rationale.
+See [`AGENTS.md`](./AGENTS.md) and
+[`docs/agents/coding_rules.md`](./docs/agents/coding_rules.md) for the full
+agent and coding rules.
